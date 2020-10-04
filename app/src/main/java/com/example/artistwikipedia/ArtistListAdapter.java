@@ -25,18 +25,17 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Ar
     @NonNull
     @Override
     public ArtistListAdapter.ArtistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
+        View aItemView = aInflater.inflate(R.layout.items_layout, parent, false);
+        return new ArtistViewHolder(aItemView, this);    }
 
     @Override
     public void onBindViewHolder(@NonNull ArtistListAdapter.ArtistViewHolder holder, int position) {
-
+        holder.titleView.setText(artists.get(position).getName());
+        holder.descView.setText(artists.get(position).getDescription());
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemCount() { return artists.size(); }
 
     class ArtistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView titleView, descView;
@@ -44,12 +43,22 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Ar
 
         public ArtistViewHolder(@NonNull View itemView, ArtistListAdapter adapter) {
             super(itemView);
-
+            titleView = itemView.findViewById(R.id.txtTitle);
+            descView = itemView.findViewById(R.id.txtDesc);
+            this.aAdapter = adapter;
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            int position = getLayoutPosition();
 
+            Intent intent = new Intent(v.getContext(), MainActivity2.class);
+            intent.putExtra("song", artists.get(position).getSong());
+            intent.putExtra("img", artists.get(position).getImg());
+            v.getContext().startActivity(intent);
+
+            aAdapter.notifyDataSetChanged();
         }
     }
 }
