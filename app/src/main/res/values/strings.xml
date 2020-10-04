@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Artist Wikipedia</string>
+    <string name="top_10_songs">Top 10 Songs</string>
+    <string name="artistimage">artistimage</string>
 </resources>
